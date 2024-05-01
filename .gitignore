@@ -22,3 +22,6 @@ go.work
 
 # Environment variable file
 .env
+
+# Directory created at docker startup
+mysql_data/
