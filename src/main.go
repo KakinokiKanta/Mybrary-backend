@@ -9,5 +9,5 @@ func main() {
 			"message": "pong",
 		})
 	})
-	r.Run("localhost:8080")
+	r.Run() // dockerでポート8080を指定しているため、ここでは指定しない
 }
