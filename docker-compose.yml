@@ -4,7 +4,8 @@ services:
   api:
     container_name: api
     build:
-      dockerfile: ./go.dockerfile
+      context: .
+      dockerfile: go.dockerfile
     ports:
       - 8080:8080
     links:
@@ -16,7 +17,8 @@ services:
   mysql:
     container_name: mysql
     build:
-      dockerfile: ./db.dockerfile
+      context: .
+      dockerfile: db.dockerfile
     hostname: mysql
     ports:
       - "3306:3306"
