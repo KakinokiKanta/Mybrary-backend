@@ -25,3 +25,4 @@ go.work
 
 # Directory created at docker startup
 mysql_data/
+docker
