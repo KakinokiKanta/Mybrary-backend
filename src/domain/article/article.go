@@ -8,7 +8,7 @@ type Article struct {
 	url         string
 	title       string
 	description string
-	tags        []string
+	tags        ArticleTags
 }
 
 func NewArticle(
@@ -16,7 +16,7 @@ func NewArticle(
 	url string,
 	title string,
 	description string,
-	tags []string,
+	tags ArticleTags,
 ) (*Article, error) {
 	// ulidパッケージでULIDを生成し、string型に変換
 	id := ulid.Make().String()
@@ -31,4 +31,10 @@ func NewArticle(
 		description: description,
 		tags: tags,
 	}, nil
+}
+
+type ArticleTags []ArticleTag
+
+type ArticleTag struct {
+	tagID string
 }
