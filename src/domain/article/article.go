@@ -60,6 +60,11 @@ type ArticleTag struct {
 }
 
 func NewArticleTag(tagID string) (*ArticleTag, error) {
+	// 記事タグIDのバリデーション
+	if _, err := ulid.Parse(tagID); err != nil {
+		return nil, err
+	}
+
 	return &ArticleTag{
 		tagID: tagID,
 	}, nil
