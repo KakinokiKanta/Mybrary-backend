@@ -59,6 +59,12 @@ type ArticleTag struct {
 	tagID string
 }
 
+func NewArticleTag(tagID string) (*ArticleTag, error) {
+	return &ArticleTag{
+		tagID: tagID,
+	}, nil
+}
+
 const (
 	// URLの最小値
 	urlLengthMin = 1
