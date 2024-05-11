@@ -41,6 +41,66 @@ func TestNewArticle(t *testing.T) {
 			},
 			expectedErr: false,
 		},
+		{
+			testName: "異常系: ユーザIDが不正",
+			args: args{
+				userID: "userID",
+				url: "https://example.dev",
+				title: "テスト記事",
+				description: "テスト記事の詳細",
+				tags: []ArticleTag{{tagID: "GO"}, {tagID: "Gin"}},
+			},
+			expected: nil,
+			expectedErr: true,
+		},
+		{
+			testName: "異常系: URLなし",
+			args: args{
+				userID: userID,
+				url: "",
+				title: "テスト記事",
+				description: "テスト記事の詳細",
+				tags: []ArticleTag{{tagID: "GO"}, {tagID: "Gin"}},
+			},
+			expected: nil,
+			expectedErr: true,
+		},
+		{
+			testName: "異常系: 記事タイトルなし",
+			args: args{
+				userID: userID,
+				url: "https://example.dev",
+				title: "",
+				description: "テスト記事の詳細",
+				tags: []ArticleTag{{tagID: "GO"}, {tagID: "Gin"}},
+			},
+			expected: nil,
+			expectedErr: true,
+		},
+		{
+			testName: "異常系: 記事の詳細なし",
+			args: args{
+				userID: userID,
+				url: "https://example.dev",
+				title: "テスト記事",
+				description: "",
+				tags: []ArticleTag{{tagID: "GO"}, {tagID: "Gin"}},
+			},
+			expected: nil,
+			expectedErr: true,
+		},
+		{
+			testName: "異常系: 記事タグが6個",
+			args: args{
+				userID: userID,
+				url: "https://example.dev",
+				title: "テスト記事",
+				description: "テスト記事の詳細",
+				tags: []ArticleTag{{tagID: "GO"}, {tagID: "Gin"},{tagID: "Echo"}, {tagID: "Beego"},{tagID: "Gorilla"}, {tagID: "Revel"}},
+			},
+			expected: nil,
+			expectedErr: true,
+		},
 	}
 
 	for _, tt := range tests {
