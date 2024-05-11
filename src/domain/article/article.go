@@ -26,6 +26,10 @@ func NewArticle(
 	// ulidパッケージでULIDを生成し、string型に変換
 	id := ulid.Make().String()
 
+	// ユーザIDのバリデーション
+	if _, err := ulid.Parse(userID); err != nil {
+		return nil, err
+	}
 	// URLのバリデーション
 	if utf8.RuneCountInString(url) < urlLengthMin {
 		return nil, errors.New("url is an incorrect value")
