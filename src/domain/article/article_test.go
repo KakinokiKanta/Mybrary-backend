@@ -20,7 +20,7 @@ func TestNewArticle(t *testing.T) {
 	tests := []struct {
 		testName string
 		args args
-		expected Article
+		expected *Article
 		expectedErr bool
 	}{
 		{
@@ -32,7 +32,7 @@ func TestNewArticle(t *testing.T) {
 				description: "テスト記事の詳細",
 				tags: []ArticleTag{ArticleTag{"Go"}, ArticleTag{"Gin"}},
 			},
-			expected: Article{
+			expected: &Article{
 				userID: userID,
 				url: "https://example.dev",
 				title: "テスト記事",
@@ -56,7 +56,7 @@ func TestNewArticle(t *testing.T) {
 				cmpopts.IgnoreFields(Article{}, "id"),
 			)
 			if diff != "" {
-				t.Errorf("NewArticle() = %v, expected %v. error is %s", got, tt.expected, err)
+				t.Errorf("NewArticle() = %v, expected %v, error is %s, diff is %v", got, tt.expected, err, diff)
 			}
 		})
 	}
