@@ -30,14 +30,14 @@ func TestNewArticle(t *testing.T) {
 				url: "https://example.dev",
 				title: "テスト記事",
 				description: "テスト記事の詳細",
-				tags: []ArticleTag{ArticleTag{"Go"}, ArticleTag{"Gin"}},
+				tags: []ArticleTag{{tagID: "GO"}, {tagID: "Gin"}},
 			},
 			expected: &Article{
 				userID: userID,
 				url: "https://example.dev",
 				title: "テスト記事",
 				description: "テスト記事の詳細",
-				tags: []ArticleTag{ArticleTag{"Go"}, ArticleTag{"Gin"}},
+				tags: []ArticleTag{{tagID: "GO"}, {tagID: "Gin"}},
 			},
 			expectedErr: false,
 		},
@@ -45,18 +45,18 @@ func TestNewArticle(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.testName, func(t *testing.T) {
-			got, err := NewArticle(tt.args.userID, tt.args.url, tt.args.title, tt.args.description, tt.args.tags)
+			result, err := NewArticle(tt.args.userID, tt.args.url, tt.args.title, tt.args.description, tt.args.tags)
 			if (err != nil) != tt.expectedErr {
 				t.Errorf("NewArticle() error = %v, ExpectedErr %v", err, tt.expectedErr)
 				return
 			}
 			diff := cmp.Diff(
-				got, tt.expected,
-				cmp.AllowUnexported(Article{}),
+				result, tt.expected,
+				cmp.AllowUnexported(Article{}, ArticleTag{}),
 				cmpopts.IgnoreFields(Article{}, "id"),
 			)
 			if diff != "" {
-				t.Errorf("NewArticle() = %v, expected %v, error is %s, diff is %v", got, tt.expected, err, diff)
+				t.Errorf("NewArticle() = %v, expected %v, error is %s, diff is %v", result, tt.expected, err, diff)
 			}
 		})
 	}
