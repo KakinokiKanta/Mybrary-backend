@@ -11,3 +11,11 @@ func NewSaveArticleUseCase (articleRepo articleDomain.ArticleRepository) *SaveAr
 		articleRepo: articleRepo,
 	}
 }
+
+type SaveArticleInputDto struct {
+	UserID      string
+	Url         string
+	Title       string
+	Description string
+	Tags        []articleDomain.ArticleTag
+}
