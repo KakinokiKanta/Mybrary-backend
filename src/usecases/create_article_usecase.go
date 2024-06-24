@@ -1,6 +1,6 @@
 package article
 
-import articleDomain "github.com/KakinokiKanta/Mybrary-backend/domain/article"
+import articleDomain "github.com/KakinokiKanta/Mybrary-backend/domain"
 
 type SaveArticleUseCase struct {
 	articleRepo articleDomain.ArticleRepository
