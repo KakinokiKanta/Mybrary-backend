@@ -7,8 +7,10 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
+type ArticleID string
+
 type Article struct {
-	id          string
+	id          ArticleID
 	userID      string
 	url         string
 	title       string
