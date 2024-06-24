@@ -1,4 +1,4 @@
-package article
+package domain
 
 type ArticleRepository interface {
 	Create(article Article) error
