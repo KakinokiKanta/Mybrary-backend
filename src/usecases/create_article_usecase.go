@@ -2,17 +2,17 @@ package article
 
 import articleDomain "github.com/KakinokiKanta/Mybrary-backend/domain"
 
-type SaveArticleUseCase struct {
+type CreateArticleUseCase struct {
 	articleRepo articleDomain.ArticleRepository
 }
 
-func NewSaveArticleUseCase (articleRepo articleDomain.ArticleRepository) *SaveArticleUseCase {
-	return &SaveArticleUseCase{
+func NewCreateArticleUseCase (articleRepo articleDomain.ArticleRepository) *CreateArticleUseCase {
+	return &CreateArticleUseCase{
 		articleRepo: articleRepo,
 	}
 }
 
-type SaveArticleInputDto struct {
+type CreateArticleInputDto struct {
 	UserID      string
 	Url         string
 	Title       string
