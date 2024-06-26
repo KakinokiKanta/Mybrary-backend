@@ -19,11 +19,11 @@ type Article struct {
 }
 
 type ArticleRepository interface {
-	Create(article Article) error
-	FindById(id string) (Article, error)
+	Create(Article) error
+	FindById(ArticleID) (Article, error)
 	FindAll() ([]Article, error)
-	Update(article Article) error
-	Delete(article Article) error
+	Update(Article) error
+	Delete(Article) error
 }
 
 func NewArticle(
