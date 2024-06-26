@@ -16,6 +16,11 @@ type User struct {
 	createdAt time.Time
 }
 
+// TODO: リポジトリ
+type UserRepository interface {
+	
+}
+
 func NewUser(name string) (*User, error) {
 	// ulidパッケージでULIDを生成し、string型に変換し、UserID型に変換
 	id := UserID(ulid.Make().String())
