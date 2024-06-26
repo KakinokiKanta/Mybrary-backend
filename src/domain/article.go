@@ -23,6 +23,7 @@ type Article struct {
 type ArticleRepository interface {
 	Create(Article) error
 	FindById(ArticleID) (Article, error)
+	FindByUserID(UserID) ([]Article, error)
 	FindAll() ([]Article, error)
 	Update(Article) error
 	Delete(Article) error
