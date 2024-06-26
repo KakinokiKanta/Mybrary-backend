@@ -12,7 +12,7 @@ type ArticleID string
 
 type Article struct {
 	id          ArticleID
-	userID      string
+	userID      string // TODO: UserID型にする
 	url         string
 	title       string
 	description string
@@ -66,21 +66,6 @@ func NewArticle(
 		description: description,
 		createdAt: createdAt,
 		tags: tags,
-	}, nil
-}
-
-type ArticleTag struct {
-	tagID string
-}
-
-func NewArticleTag(tagID string) (*ArticleTag, error) {
-	// 記事タグIDのバリデーション
-	if _, err := ulid.Parse(tagID); err != nil {
-		return nil, err
-	}
-
-	return &ArticleTag{
-		tagID: tagID,
 	}, nil
 }
 
