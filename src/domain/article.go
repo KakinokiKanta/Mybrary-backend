@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"time"
 	"unicode/utf8"
 
 	"github.com/oklog/ulid/v2"
@@ -15,6 +16,7 @@ type Article struct {
 	url         string
 	title       string
 	description string
+	createdAt   time.Time
 	tags        []ArticleTag
 }
 
@@ -36,10 +38,9 @@ func NewArticle(
 	// ulidパッケージでULIDを生成し、string型に変換し、ArticleID型に変換
 	id := ArticleID(ulid.Make().String())
 
-	// ユーザIDのバリデーション
-	if _, err := ulid.Parse(userID); err != nil {
-		return nil, err
-	}
+	// timeパッケージで現在時刻を、記事ドメイン生成時刻とする
+	createdAt := time.Now()
+
 	// URLのバリデーション
 	if utf8.RuneCountInString(url) < urlLengthMin {
 		return nil, errors.New("url is an incorrect value")
@@ -63,6 +64,7 @@ func NewArticle(
 		url: url,
 		title: title,
 		description: description,
+		createdAt: createdAt,
 		tags: tags,
 	}, nil
 }
