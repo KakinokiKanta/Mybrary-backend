@@ -9,9 +9,9 @@ import (
 )
 
 func TestNewArticle(t *testing.T) {
-	userID := ulid.Make().String()
+	userID := UserID(ulid.Make().String())
 	type args struct {
-		userID string
+		userID UserID
 		url string
 		title string
 		description string

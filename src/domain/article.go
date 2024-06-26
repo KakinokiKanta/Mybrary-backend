@@ -12,7 +12,7 @@ type ArticleID string
 
 type Article struct {
 	id          ArticleID
-	userID      string // TODO: UserID型にする
+	userID      UserID
 	url         string
 	title       string
 	description string
@@ -29,7 +29,7 @@ type ArticleRepository interface {
 }
 
 func NewArticle(
-	userID string,
+	userID UserID,
 	url string,
 	title string,
 	description string,
