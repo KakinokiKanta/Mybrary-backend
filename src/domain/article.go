@@ -33,7 +33,7 @@ func NewArticle(
 	description string,
 	tags []ArticleTag,
 ) (*Article, error) {
-	// ulidパッケージでULIDを生成し、string型に変換
+	// ulidパッケージでULIDを生成し、string型に変換し、ArticleID型に変換
 	id := ArticleID(ulid.Make().String())
 
 	// ユーザIDのバリデーション
