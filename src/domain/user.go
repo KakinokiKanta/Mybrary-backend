@@ -41,6 +41,18 @@ func NewUser(name string) (*User, error) {
 	}, nil
 }
 
+func (user User) ID() UserID {
+	return user.id
+}
+
+func (user User) Name() string {
+	return user.name
+}
+
+func (user User) CreatedAt() time.Time {
+	return user.createdAt
+}
+
 const (
 	// ユーザ名の最小文字数/最大文字数
 	userNameLengthMin = 1
