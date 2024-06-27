@@ -30,6 +30,14 @@ func NewArticleTag(name string, usedNum int) (*ArticleTag, error) {
 	}, nil
 }
 
+func (articleTag ArticleTag) TagName() TagName {
+	return articleTag.tagName
+}
+
+func (articleTag ArticleTag) UsedNum() int {
+	return articleTag.usedNum
+}
+
 const (
 	// 記事タグ名の最小文字数/最大文字数
 	tagLengthMin = 1
