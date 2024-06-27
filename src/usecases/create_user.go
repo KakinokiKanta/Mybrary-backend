@@ -1,6 +1,10 @@
 package usecases
 
-import "github.com/KakinokiKanta/Mybrary-backend/domain"
+import (
+	"time"
+
+	"github.com/KakinokiKanta/Mybrary-backend/domain"
+)
 
 type CreateUserUsecase struct {
 	userRepo domain.UserRepository
@@ -36,6 +40,8 @@ func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutput
 	}
 
 	return &CreateUserOutputDTO{
-		Id: createdUser,
-	}
+		Id: createdUser.ID(),
+		Name: createdUser.Name(),
+		CreatedAt: createdUser.CreatedAt().Format(time.RFC3339),
+	}, nil
 }
