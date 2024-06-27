@@ -16,8 +16,19 @@ type CreateUserOutputDTO struct {
 	CreatedAt string `json:"created_at"`
 }
 
-func NewCreateUserUsecase(userRepo domain.UserRepository) CreateUserUsecase {
-	return CreateUserUsecase{
+func NewCreateUserUsecase(userRepo domain.UserRepository) *CreateUserUsecase {
+	return &CreateUserUsecase{
 		userRepo: userRepo,
 	}
+}
+
+func (uc *CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutputDTO, error) {
+	// Userドメインを生成
+	user, err := domain.NewUser(input.Name)
+	if err != nil {
+		return nil, err
+	}
+
+	// Userドメインのリポジトリを用いて、Userの永続化
+	user, err = uc.userRepo.Create(user)
 }
