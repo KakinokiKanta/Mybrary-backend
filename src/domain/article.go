@@ -21,11 +21,10 @@ type Article struct {
 }
 
 type ArticleRepository interface {
-	Create(Article) error
-	FindById(ArticleID) (Article, error)
+	Create(Article) (Article, error)
+	FindByArticleId(ArticleID) (Article, error)
 	FindByUserID(UserID) ([]Article, error)
-	FindAll() ([]Article, error)
-	Update(Article) error
+	Update(Article) (Article, error)
 	Delete(Article) error
 }
 
