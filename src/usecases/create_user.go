@@ -22,7 +22,7 @@ func NewCreateUserUsecase(userRepo domain.UserRepository) *CreateUserUsecase {
 	}
 }
 
-func (uc *CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutputDTO, error) {
+func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutputDTO, error) {
 	// Userドメインを生成
 	user, err := domain.NewUser(input.Name)
 	if err != nil {
@@ -30,5 +30,12 @@ func (uc *CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutpu
 	}
 
 	// Userドメインのリポジトリを用いて、Userの永続化
-	user, err = uc.userRepo.Create(user)
+	createdUser, err := uc.userRepo.Create(*user)
+	if err != nil {
+		return nil, err
+	}
+
+	return &CreateUserOutputDTO{
+		Id: createdUser,
+	}
 }
