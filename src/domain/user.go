@@ -16,9 +16,10 @@ type User struct {
 	createdAt time.Time
 }
 
-// TODO: リポジトリ
 type UserRepository interface {
-	
+	Create(User) (User, error)
+	FindById(UserID) (User, error)
+	Update(User) (User, error)
 }
 
 func NewUser(name string) (*User, error) {
