@@ -15,3 +15,9 @@ type CreateUserOutputDTO struct {
 	Name string `json:"name"`
 	CreatedAt string `json:"created_at"`
 }
+
+func NewCreateUserUsecase(userRepo domain.UserRepository) CreateUserUsecase {
+	return CreateUserUsecase{
+		userRepo: userRepo,
+	}
+}
