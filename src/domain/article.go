@@ -69,6 +69,34 @@ func NewArticle(
 	}, nil
 }
 
+func (article Article) ID() ArticleID {
+	return article.id
+}
+
+func (article Article) UserID() UserID {
+	return article.userID
+}
+
+func (article Article) URL() string {
+	return article.url
+}
+
+func (article Article) Title() string {
+	return article.title
+}
+
+func (article Article) Description() string {
+	return article.description
+}
+
+func (article Article) CreatedAt() time.Time {
+	return article.createdAt
+}
+
+func (article Article) Tags() []ArticleTag {
+	return article.tags
+}
+
 const (
 	// URLの最小値
 	urlLengthMin = 1
