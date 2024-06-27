@@ -3,30 +3,29 @@ package domain
 import (
 	"errors"
 	"unicode/utf8"
-
-	"github.com/oklog/ulid/v2"
 )
 
-type TagID string
+type TagName string
 
 type ArticleTag struct {
-	id      TagID
-	name    string
+	tagName TagName
 	usedNum int
 }
 
-func NewArticleTag(usedNum int, name string) (*ArticleTag, error) {
-	// ulidパッケージでULIDを生成し、string型に変換し、ArticleID型に変換
-	id := TagID(ulid.Make().String())
+type ArticleTagRepository interface {
+	Create(ArticleTag) (ArticleTag, error)
+	FindByName(string) (ArticleTag, error)
+	UpdateNum(TagName) (ArticleTag, error)
+}
 
+func NewArticleTag(name string, usedNum int) (*ArticleTag, error) {
 	// 記事タグのバリデーション
 	if utf8.RuneCountInString(name) < tagLengthMin || tagLengthMax < utf8.RuneCountInString(name) {
 		return nil, errors.New("name is an incorrect value")
 	}
 
 	return &ArticleTag{
-		id: id,
-		name: name,
+		tagName: TagName(name),
 		usedNum: usedNum,
 	}, nil
 }
