@@ -20,7 +20,8 @@ func (m mockUserRepoStore) Create(_ domain.User) (domain.User, error) {
 }
 
 func TestCreateUserUsecase(t *testing.T) {
-	repositoryResult, repositoryErr := domain.NewUser("Test user")
+	successMockResult, successMockErr := domain.NewUser("Test user")
+	failMockResult, failMockErr := domain.NewUser("")
 
 	tests := []struct {
 		testName string
@@ -30,10 +31,10 @@ func TestCreateUserUsecase(t *testing.T) {
 		expectedErr bool
 	}{
 		{
-			testName: "Create user successful",
+			testName: "Successfully create user",
 			repository: mockUserRepoStore{
-				result: repositoryResult,
-				err: repositoryErr,
+				result: successMockResult,
+				err: successMockErr,
 			},
 			args: CreateUserInputDTO{
 				Name: "Test user",
