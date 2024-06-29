@@ -8,17 +8,6 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
-type mockUserRepoStore struct {
-	domain.UserRepository
-
-	result *domain.User
-	err error
-}
-
-func (m mockUserRepoStore) Create(_ domain.User) (domain.User, error) {
-	return *m.result, m.err
-}
-
 func TestCreateUserUsecase(t *testing.T) {
 	successMockResult, successMockErr := domain.NewUser("Test user")
 	failMockResult, failMockErr := domain.NewUser("")
