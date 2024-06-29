@@ -44,6 +44,18 @@ func TestCreateUserUsecase(t *testing.T) {
 			},
 			expectedErr: false,
 		},
+		{
+			testName: "Unsuccessfully create user",
+			repository: mockUserRepoStore{
+				result: failMockResult,
+				err: failMockErr,
+			},
+			args: CreateUserInputDTO{
+				Name: "",
+			},
+			expected: nil,
+			expectedErr: true,
+		},
 	}
 
 	for _, tt := range tests {
