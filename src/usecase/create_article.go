@@ -1,4 +1,4 @@
-package usecases
+package usecase
 
 import articleDomain "github.com/KakinokiKanta/Mybrary-backend/domain"
 
