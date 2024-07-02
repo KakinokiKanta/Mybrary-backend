@@ -1,33 +1,51 @@
 package database
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
 
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
-func SetupDB() *gorm.DB {
+var (
+	dbHost string
+	dbUser string
+	dbPassword string
+	dbName string
+	dbPort string
+)
+
+func SetupDB() (*sql.DB, error) {
 	// 環境変数からデータベース接続情報を取得
-	dbHost := os.Getenv("DB_HOST")
-	dbUser := os.Getenv("MYSQL_USER")
-	dbPassword := os.Getenv("MYSQL_PASSWORD")
-	dbName := os.Getenv("MYSQL_DATABAS")
-	dbPort := os.Getenv("DB_PORT")
+	loadEnv()
 
 	// データベース接続文字列の構築
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True",
 		dbUser, dbPassword, dbHost, dbPort, dbName)
 
 	// データベースに接続
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatalf("Failed to connect database: %v", err)
 	}
 
 	log.Println("Succeeded to connect database")
 
-	return db
+	return db, nil
 }
+
+func loadEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Println("fail to load .env file")
+	}
+	dbHost = os.Getenv("DB_HOST")
+	dbUser = os.Getenv("MYSQL_USER")
+	dbPassword = os.Getenv("MYSQL_PASSWORD")
+	dbName = os.Getenv("MYSQL_DATABAS")
+	dbPort = os.Getenv("DB_PORT")
+}
+
