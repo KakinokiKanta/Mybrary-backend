@@ -1,23 +1,31 @@
 package repository
 
-import "github.com/KakinokiKanta/Mybrary-backend/domain"
+import (
+	"database/sql"
 
-// TODO: ここにデータベース処理を実装して
-// データベースを操作するExec処理等は
-// databaseに移行する
-type UserRepository struct {}
+	"github.com/KakinokiKanta/Mybrary-backend/domain"
+)
 
-func NewUserRepository() UserRepository {
-	return UserRepository{}
+type UserRepository struct {
+	db *sql.DB
+}
+
+func NewUserRepository(db *sql.DB) UserRepository {
+	return UserRepository{
+		db: db,
+	}
 }
 
 func (repo UserRepository) Create(user domain.User) (domain.User, error) {
 	// クエリの定義
-	// var query = `
-	// 	INSERT INTO users (id, name, created_at) values (?, ?, now());
-	// `
+	var query = `
+		INSERT INTO users (id, name, created_at) values (?, ?, ?);
+	`
 	// sql.DB型のメソッドExecを用いて、クエリを実行
-	// result, err := 
+	_, err := repo.db.Exec(query, user.ID(), user.Name(), user.CreatedAt())
+	if err != nil {
+		return domain.User{}, err
+	}
 
-	return domain.User{}, nil // いったんね
+	return user, nil
 }
