@@ -32,5 +32,5 @@ func (con CreateUserController) Execute(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"data": registeredUser})
+	ctx.JSON(http.StatusCreated, registeredUser)
 }
