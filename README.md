@@ -4,6 +4,6 @@
 
 ```
 docker-compose up
-mysql -h localhost -u <username> <mybrary-db> -p < setupDB.sql
+mysql -h localhost -u <username> <dbname> -p < setupDB.sql
 go run main.go
 ```
