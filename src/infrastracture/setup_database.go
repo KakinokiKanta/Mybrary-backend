@@ -18,7 +18,7 @@ var (
 	dbPort string
 )
 
-func SetupDB() (*sql.DB, error) {
+func SetupDB() *sql.DB {
 	// 環境変数からデータベース接続情報を取得
 	loadEnv()
 
@@ -34,7 +34,7 @@ func SetupDB() (*sql.DB, error) {
 
 	log.Println("Succeeded to connect database")
 
-	return db, nil
+	return db
 }
 
 func loadEnv() {
