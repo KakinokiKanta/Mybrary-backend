@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func setupRouter(db *sql.DB) *gin.Engine {
+func SetupRouter(db *sql.DB) *gin.Engine {
 	userRepository := repository.NewUserRepository(db)
 	createUserUsecase := usecase.NewCreateUserUsecase(userRepository)
 	createUserController := controller.NewCreateUserController(*createUserUsecase)
