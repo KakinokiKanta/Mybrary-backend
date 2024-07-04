@@ -1,6 +1,6 @@
 # ユーザデータを格納するためのテーブル
-CREATE TABLE user (
+CREATE TABLE users (
   id VARCHAR(128) NOT NULL PRIMARY KEY,
   name VARCHAR(64) NOT NULL,
-  createdAt datetime
+  created_at datetime
 )
