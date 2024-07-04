@@ -18,8 +18,9 @@ type User struct {
 
 type UserRepository interface {
 	Create(User) (User, error)
-	FindById(UserID) (User, error)
-	Update(User) (User, error)
+	// TODO: 現状使わず、未実装のメソッドなのでコメントアウト
+	// FindById(UserID) (User, error)
+	// Update(User) (User, error)
 }
 
 func NewUser(name string) (*User, error) {
