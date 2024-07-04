@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter(db *sql.DB) *gin.Engine {
+func SetupRouter(db *sql.DB) {
 	userRepository := repository.NewUserRepository(db)
 	createUserUsecase := usecase.NewCreateUserUsecase(userRepository)
 	createUserController := controller.NewCreateUserController(*createUserUsecase)
@@ -21,5 +21,12 @@ func SetupRouter(db *sql.DB) *gin.Engine {
 	userRouter := r.Group("/user")
 	userRouter.POST("", createUserController.Execute)
 
-	return r
+	checkRouter := r.Group("/ping")
+	checkRouter.GET("", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+
+	r.Run() // dockerでポート8080を指定しているため、ここでは指定しない
 }

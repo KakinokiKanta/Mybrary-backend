@@ -7,7 +7,5 @@ import (
 
 func main() {
 	db := database.SetupDB()
-	r := router.SetupRouter(db)
-
-	r.Run() // dockerでポート8080を指定しているため、ここでは指定しない
+	router.SetupRouter(db)
 }
