@@ -17,6 +17,7 @@ func setupRouter(db *sql.DB) *gin.Engine {
 
 	r := gin.Default()
 	r.Use(cors.Default())
+
 	userRouter := r.Group("/user")
 	userRouter.POST("", createUserController.Execute)
 
