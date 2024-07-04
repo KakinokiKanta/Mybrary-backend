@@ -31,6 +31,13 @@ func SetupDB() *sql.DB {
 	if err != nil {
 		log.Fatalf("Failed to connect database: %v", err)
 	}
+	defer db.Close()
+
+	// データベース接続の確認
+	err = db.Ping()
+	if err != nil {
+		log.Fatalf("Failed to connect database: %v", err)
+	}
 
 	log.Println("Succeeded to connect database")
 
@@ -38,7 +45,7 @@ func SetupDB() *sql.DB {
 }
 
 func loadEnv() {
-	err := godotenv.Load(".env")
+	err := godotenv.Load("../.env")
 	if err != nil {
 		fmt.Println("fail to load .env file")
 	}
