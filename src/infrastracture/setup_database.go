@@ -51,7 +51,7 @@ func loadEnv() {
 	dbHost = os.Getenv("DB_HOST")
 	dbUser = os.Getenv("MYSQL_USER")
 	dbPassword = os.Getenv("MYSQL_PASSWORD")
-	dbName = os.Getenv("MYSQL_DATABAS")
+	dbName = os.Getenv("MYSQL_DATABASE")
 	dbPort = os.Getenv("DB_PORT")
 }
 
