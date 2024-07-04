@@ -31,7 +31,6 @@ func SetupDB() *sql.DB {
 	if err != nil {
 		log.Fatalf("Failed to connect database: %v", err)
 	}
-	defer db.Close()
 
 	// データベース接続の確認
 	err = db.Ping()
