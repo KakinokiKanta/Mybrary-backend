@@ -6,4 +6,5 @@
 docker-compose up
 mysql -h localhost -u <username> <dbname> -p < setupDB.sql
 go run main.go
+go test -v
 ```
