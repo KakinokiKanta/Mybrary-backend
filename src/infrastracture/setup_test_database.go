@@ -73,7 +73,7 @@ func loadTestEnv() {
 func CleanupDB() error {
 	// os/execパッケージのexec.Command関数を用いて、実行したいコマンドの情報を持つexec.Cmd型の変数を用意
 	passStr := fmt.Sprintf("--password=%s", testDBPassword)
-	cmd := exec.Command("mysql", "-h", testDBHost, "-u", testDBUser, testDBName, passStr, "-e", "source ../../_scripts/mysql/cleanupDB.sql")
+	cmd := exec.Command("mysql", "-h", testDBHost, "-u", testDBUser, testDBName, passStr, "-e", "source ../../../_scripts/mysql/cleanupDB.sql")
 	// exec.Cmd型のRunメソッドを読んで、コマンドを実行
 	err := cmd.Run()
 	if err != nil {
@@ -88,7 +88,7 @@ func CleanupDB() error {
 func setupTestData() error {
 	// os/execパッケージのexec.Command関数を用いて、実行したいコマンドの情報を持つexec.Cmd型の変数を用意
 	passStr := fmt.Sprintf("--password=%s", testDBPassword)
-	cmd := exec.Command("mysql", "-h", testDBHost, "-u", testDBUser, testDBName, passStr, "-e", "source ../../_scripts/mysql/setupDB.sql")
+	cmd := exec.Command("mysql", "-h", testDBHost, "-u", testDBUser, testDBName, passStr, "-e", "source ../../../_scripts/mysql/setupDB.sql")
 	// exec.Cmd型のRunメソッドを読んで、コマンドを実行
 	err := cmd.Run()
 	if err != nil {
@@ -96,7 +96,7 @@ func setupTestData() error {
 		return err
 	}
 
-	cmd = exec.Command("mysql", "-h", testDBHost, "-u", testDBUser, testDBName, passStr, "-e", "source ../../_scripts/mysql/insertUser.sql")
+	cmd = exec.Command("mysql", "-h", testDBHost, "-u", testDBUser, testDBName, passStr, "-e", "source ../../../_scripts/mysql/insertUser.sql")
 	// exec.Cmd型のRunメソッドを読んで、コマンドを実行
 	err = cmd.Run()
 	if err != nil {
