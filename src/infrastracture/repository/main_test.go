@@ -15,9 +15,13 @@ func TestMain(m *testing.M)  {
 
 	// パッケージ内のユニットテストをすべて実行
 	m.Run()
+
+	// 後処理
+	teardown()
 }
 
-// 前処理
-func setupTest() {
-
+// 接続したデータベースとのアクセスを閉じる後処理
+func teardown() {
+	infrastracture.CleanupDB()
+	testDB.Close()
 }

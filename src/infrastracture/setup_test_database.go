@@ -42,7 +42,7 @@ func SetupTest() *sql.DB {
 	log.Println("Succeeded to connect database")
 
 	// テスト用データの登録
-	if err = cleanupDB(); err != nil {
+	if err = CleanupDB(); err != nil {
 		fmt.Println("Cleanup database")
 		return nil
 	}
@@ -67,7 +67,7 @@ func loadTestEnv() {
 }
 
 // DB内のテスト用データを消す後処理
-func cleanupDB() error {
+func CleanupDB() error {
 	// os/execパッケージのexec.Command関数を用いて、実行したいコマンドの情報を持つexec.Cmd型の変数を用意
 	passStr := fmt.Sprintf("--password=%s", testDBPassword)
 	cmd := exec.Command("mysql", "-h", testDBHost, "-u", testDBUser, testDBName, passStr, "-e", "source ../../_scripts/mysql/cleanupDB.sql")
