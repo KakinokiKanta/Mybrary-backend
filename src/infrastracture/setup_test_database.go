@@ -55,7 +55,7 @@ func SetupTest() *sql.DB {
 }
 
 func loadTestEnv() {
-	err := godotenv.Load("../.env")
+	err := godotenv.Load("../../../.env")
 	if err != nil {
 		fmt.Println("fail to load .env file")
 	}
