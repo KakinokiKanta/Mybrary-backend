@@ -44,13 +44,11 @@ func SetupTest() *sql.DB {
 	// テスト用データの登録
 	if err = CleanupDB(); err != nil {
 		log.Fatalf("Failed to cleanup database")
-		return nil
 	}
 	fmt.Println("Cleanup database")
 
 	if err = setupTestData(); err != nil {
 		log.Fatalf("Failed setup test data")
-		return nil
 	}
 	fmt.Println("Setup test data")
 
