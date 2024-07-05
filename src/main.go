@@ -2,11 +2,11 @@ package main
 
 import (
 	"github.com/KakinokiKanta/Mybrary-backend/api/router"
-	database "github.com/KakinokiKanta/Mybrary-backend/infrastracture"
+	"github.com/KakinokiKanta/Mybrary-backend/infrastracture"
 )
 
 func main() {
-	db := database.SetupDB()
+	db := infrastracture.SetupDB()
 	defer db.Close()
 	router.SetupRouter(db)
 }
