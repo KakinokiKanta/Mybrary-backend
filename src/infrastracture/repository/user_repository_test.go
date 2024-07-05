@@ -38,6 +38,7 @@ func TestCreateUserRepository(t *testing.T) {
 			}
 			diff := cmp.Diff(
 				result, tt.expected,
+				cmp.AllowUnexported(domain.User{}),
 			)
 			if diff != "" {
 				t.Errorf("[TestCase '%s'] Result: '%v' | Expected: '%v'", tt.testName, result, tt.expected)
