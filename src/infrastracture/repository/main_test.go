@@ -11,6 +11,7 @@ import (
 var testDB *sql.DB
 
 func TestMain(m *testing.M)  {
+	// 前処理
 	testDB = infrastracture.SetupTest()
 
 	// パッケージ内のユニットテストをすべて実行
