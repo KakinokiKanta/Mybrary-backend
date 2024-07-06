@@ -19,7 +19,7 @@ func NewUserRepository(db *sql.DB) UserRepository {
 func (repo UserRepository) Create(user domain.User) (domain.User, error) {
 	// クエリの定義
 	var query = `
-		INSERT INTO users (id, name, created_at) values (?, ?, ?);
+		INSERT INTO users (id, name, created_at) VALUES (?, ?, ?);
 	`
 	// sql.DB型のメソッドExecを用いて、クエリを実行
 	_, err := repo.db.Exec(query, user.ID(), user.Name(), user.CreatedAt())
