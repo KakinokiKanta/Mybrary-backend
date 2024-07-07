@@ -3,8 +3,9 @@
 下記、実行時に用いるコマンド等（仮）
 
 ```
-docker-compose up
-mysql -h localhost -u <username> <dbname> -p < setupDB.sql
+docker-compose up -d
+docker-compose down
 go run main.go
+mysql -h localhost -u <username> <dbname> -p < setupDB.sql
 go test -v
 ```
