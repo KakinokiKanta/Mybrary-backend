@@ -1,13 +1,12 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/KakinokiKanta/Mybrary-backend/api/router"
+	"github.com/KakinokiKanta/Mybrary-backend/infrastracture"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run() // dockerでポート8080を指定しているため、ここでは指定しない
+	db := infrastracture.SetupDB()
+	defer db.Close()
+	router.SetupRouter(db)
 }
