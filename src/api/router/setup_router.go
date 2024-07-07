@@ -18,7 +18,7 @@ func SetupRouter(db *sql.DB) {
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	userRouter := r.Group("/user")
+	userRouter := r.Group("/users")
 	userRouter.POST("", createUserController.Execute)
 
 	checkRouter := r.Group("/ping")
