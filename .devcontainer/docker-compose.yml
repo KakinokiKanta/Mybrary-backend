@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  api:
+    container_name: api
+    build:
+      context: ../
+      dockerfile: go.dockerfile
+    ports:
+      - 8080:8080
+    links:
+      - mysql
+    tty: true
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - ../src:/workspace:cached
+    command: /bin/sh -c "while sleep 1000; do :; done"
+      /bin/bash
+
+  mysql:
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: db.dockerfile
+    hostname: mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - ../.env
+    environment:
+      MYSQL_ROOT_USER: "${MYSQL_ROOT_USER}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      TZ: "${TZ}"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --sql-mode=ONLY_FULL_GROUP_BY,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+    volumes:
+      - db-volume:/var/lib/mysql
+    networks:
+      - default
+
+volumes:
+  db-volume:
+networks:
+  default:
