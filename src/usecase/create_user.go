@@ -32,7 +32,7 @@ func NewCreateUserUsecase(userRepo domain.UserRepository) *CreateUserUsecase {
 
 func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutputDTO, error) {
 	// Userドメインを生成
-	user, err := domain.NewUser(input.Name)
+	user, err := domain.NewUser(input.Name, input.Email, input.Password)
 	if err != nil {
 		return nil, err
 	}
