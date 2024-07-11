@@ -66,6 +66,14 @@ func (user User) Name() string {
 	return user.name
 }
 
+func (user User) Email() string {
+	return user.email
+}
+
+func (user User) Password() string {
+	return user.password
+}
+
 func (user User) CreatedAt() time.Time {
 	return user.createdAt
 }
