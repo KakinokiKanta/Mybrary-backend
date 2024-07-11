@@ -11,12 +11,16 @@ type CreateUserUsecase struct {
 }
 
 type CreateUserInputDTO struct {
-	Name string `json:"name"`
+	Name string `json:"name" binding:"required,min=1,max=20"`
+	Email string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=10,max=64"`
 }
 
 type CreateUserOutputDTO struct {
 	Id domain.UserID `json:"id"`
 	Name string `json:"name"`
+	Email string `json:"email"`
+	Password string `json:"password"`
 	CreatedAt string `json:"created_at"`
 }
 
