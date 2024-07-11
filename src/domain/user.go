@@ -49,6 +49,8 @@ func NewUser(name string, email string, password string) (*User, error) {
 		return nil, errors.New("password is an incorrect value")
 	}
 
+	// TODO: bcryptパッケージでパスワードをハッシュ化
+
 	return &User{
 		id: id,
 		name: name,
