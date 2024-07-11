@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"net/mail"
 	"time"
 	"unicode/utf8"
 
@@ -26,10 +27,10 @@ type UserRepository interface {
 }
 
 func NewUser(name string, email string, password string) (*User, error) {
-	// ulidパッケージでULIDを生成し、string型に変換し、UserID型に変換
+	// ULIDを生成し、string型に変換し、UserID型に変換
 	id := UserID(ulid.Make().String())
 
-	// timeパッケージで現在時刻を、記事ドメイン生成時刻とする
+	// 現在時刻を、記事ドメイン生成時刻とする
 	createdAt := time.Now()
 
 	// ユーザ名のバリデーション
@@ -37,10 +38,16 @@ func NewUser(name string, email string, password string) (*User, error) {
 		return nil, errors.New("name is an incorrect value")
 	}
 
+	// メールアドレスのバリデーション
+	addr, err := mail.ParseAddress(email)
+	if err != nil {
+		return nil, err
+	}
+
 	return &User{
 		id: id,
 		name: name,
-		email: email,
+		email: addr.Address,
 		password: password,
 		createdAt: createdAt,
 	}, nil
