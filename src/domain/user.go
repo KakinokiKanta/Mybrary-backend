@@ -13,6 +13,8 @@ type UserID string
 type User struct {
 	id        UserID
 	name      string
+	email     string
+	password  string
 	createdAt time.Time
 }
 
@@ -23,7 +25,7 @@ type UserRepository interface {
 	// Update(User) (User, error)
 }
 
-func NewUser(name string) (*User, error) {
+func NewUser(name string, email string, password string) (*User, error) {
 	// ulidパッケージでULIDを生成し、string型に変換し、UserID型に変換
 	id := UserID(ulid.Make().String())
 
@@ -38,6 +40,8 @@ func NewUser(name string) (*User, error) {
 	return &User{
 		id: id,
 		name: name,
+		email: email,
+		password: password,
 		createdAt: createdAt,
 	}, nil
 }
