@@ -44,6 +44,11 @@ func NewUser(name string, email string, password string) (*User, error) {
 		return nil, err
 	}
 
+	// パスワードのバリデーション
+	if utf8.RuneCountInString(password) < userPassLengthMin || userPassLengthMax < utf8.RuneCountInString(password) {
+		return nil, errors.New("password is an incorrect value")
+	}
+
 	return &User{
 		id: id,
 		name: name,
@@ -69,4 +74,8 @@ const (
 	// ユーザ名の最小文字数/最大文字数
 	userNameLengthMin = 1
 	userNameLengthMax = 20
+
+	// パスワードの最小文字数/最大文字数
+	userPassLengthMin = 10
+	userPassLengthMax = 64
 )
