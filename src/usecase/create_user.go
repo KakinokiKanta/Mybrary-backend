@@ -46,6 +46,8 @@ func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutput
 	return &CreateUserOutputDTO{
 		Id: createdUser.ID(),
 		Name: createdUser.Name(),
+		Email: createdUser.Email(),
+		Password: createdUser.Password(),
 		CreatedAt: createdUser.CreatedAt().Format(time.RFC3339),
 	}, nil
 }
