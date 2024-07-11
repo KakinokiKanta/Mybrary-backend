@@ -9,8 +9,8 @@ import (
 )
 
 func TestCreateUserUsecase(t *testing.T) {
-	successMockResult, successMockErr := domain.NewUser("Test user")
-	failMockResult, failMockErr := domain.NewUser("")
+	successMockResult, successMockErr := domain.NewUser("Test user", "test@mail.com", "abcdefg1234AABBCCDD")
+	failMockResult, failMockErr := domain.NewUser("", "", "")
 
 	tests := []struct {
 		testName string
