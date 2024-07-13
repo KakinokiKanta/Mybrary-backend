@@ -29,3 +29,7 @@ func (repo UserRepository) Create(user domain.User) (domain.User, error) {
 
 	return user, nil
 }
+
+func (repo UserRepository) FindByEmail(user domain.User) (*domain.User, error) {
+	// go-intermediateを参照
+}
