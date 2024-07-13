@@ -7,6 +7,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/oklog/ulid/v2"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserID string
@@ -49,13 +50,17 @@ func NewUser(name string, email string, password string) (*User, error) {
 		return nil, errors.New("password is an incorrect value")
 	}
 
-	// TODO: bcryptパッケージでパスワードをハッシュ化
+	// パスワードをハッシュ化
+	hash_pass, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, err
+	}
 
 	return &User{
 		id: id,
 		name: name,
 		email: addr.Address,
-		password: password,
+		password: string(hash_pass),
 		createdAt: createdAt,
 	}, nil
 }
@@ -78,6 +83,11 @@ func (user User) Password() string {
 
 func (user User) CreatedAt() time.Time {
 	return user.createdAt
+}
+
+func (user User) IsValidPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(user.password), []byte(password))
+	return err != bcrypt.ErrMismatchedHashAndPassword
 }
 
 const (
