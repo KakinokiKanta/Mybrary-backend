@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"errors"
 	"time"
 
 	"github.com/KakinokiKanta/Mybrary-backend/domain"
@@ -35,6 +36,15 @@ func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutput
 	user, err := domain.NewUser(input.Name, input.Email, input.Password)
 	if err != nil {
 		return nil, err
+	}
+
+	// メールアドレスがDB内に存在しないかチェック
+	DuplicatedUser, err := uc.userRepo.FindByEmail(user.Email())
+	if err != nil {
+		return nil, err
+	}
+	if DuplicatedUser != nil {
+		return nil, errors.New("this email address is already registered")
 	}
 
 	// Userドメインのリポジトリを用いて、Userの永続化
