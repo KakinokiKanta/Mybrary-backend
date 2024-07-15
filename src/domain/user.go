@@ -27,8 +27,23 @@ type UserRepository interface {
 }
 
 func NewUser(name string, email string, password string) (*User, error) {
-	// ULIDを生成し、string型に変換し、UserID型に変換
-	id := UserID(pkg.NewULID())
+	return newUser(
+		UserID(pkg.NewULID()),
+		name,
+		email,
+		password,
+	)
+}
+
+func ReUser(id UserID, name string, email string, password string) (*User, error) {
+	return newUser(id, name, email, password)
+}
+
+func newUser(id UserID, name string, email string, password string) (*User, error) {
+	// IDのバリデーション
+	if isValid := pkg.IsValid(string(id)); !isValid {
+		return nil, errors.New("id is an incorrect value")
+	}
 
 	// ユーザ名のバリデーション
 	if utf8.RuneCountInString(name) < userNameLengthMin || userNameLengthMax < utf8.RuneCountInString(name) {
