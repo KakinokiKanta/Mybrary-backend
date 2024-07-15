@@ -5,7 +5,7 @@ import (
 	"net/mail"
 	"unicode/utf8"
 
-	"github.com/oklog/ulid/v2"
+	"github.com/KakinokiKanta/Mybrary-backend/pkg"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -28,7 +28,7 @@ type UserRepository interface {
 
 func NewUser(name string, email string, password string) (*User, error) {
 	// ULIDを生成し、string型に変換し、UserID型に変換
-	id := UserID(ulid.Make().String())
+	id := UserID(pkg.NewULID())
 
 	// ユーザ名のバリデーション
 	if utf8.RuneCountInString(name) < userNameLengthMin || userNameLengthMax < utf8.RuneCountInString(name) {
