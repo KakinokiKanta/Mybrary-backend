@@ -17,7 +17,7 @@ func NewUserRepository(db *sql.DB) UserRepository {
 }
 
 func (repo UserRepository) Create(user domain.User) (domain.User, error) {
-	// クエリの定義
+	// usersテーブルにデータを追加するクエリ
 	var query = `
 		INSERT INTO users (id, name, email, password, created_at) VALUES (?, ?, ?, ?, ?);
 	`
@@ -31,5 +31,8 @@ func (repo UserRepository) Create(user domain.User) (domain.User, error) {
 }
 
 func (repo UserRepository) FindByEmail(user domain.User) (*domain.User, error) {
-	// go-intermediateを参照
+	// usersテーブルからemailフィールドが一致するカラムを取得するクエリ
+	var query = `
+		SELECT * FROM users WHERE email = ?;
+	`
 }
