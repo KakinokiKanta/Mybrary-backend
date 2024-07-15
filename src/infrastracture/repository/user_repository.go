@@ -34,7 +34,7 @@ func (repo UserRepository) Create(user domain.User) (domain.User, error) {
 func (repo UserRepository) FindByEmail(email string) (*domain.User, error) {
 	// usersテーブルからemailフィールドが一致するカラムを取得するクエリ
 	var query = `
-		SELECT * FROM users WHERE email = ?;
+		SELECT id, name, email, password FROM users WHERE email = ?;
 	`
 
 	// emailが一致したカラムを取得
@@ -43,24 +43,16 @@ func (repo UserRepository) FindByEmail(email string) (*domain.User, error) {
 		return nil, err
 	}
 
-	var user DBUser
-	var createdAt sql.NullTime
-	var updatedAt sql.NullTime
+	var dbuser dbUser
 
 	// 取得したカラムから、DB用userモデルの各フィールドに値をスキャン
-	err := row.Scan(&user.id, &user.name, &user.email, &user.password, &createdAt, &updatedAt)
+	err := row.Scan(&dbuser.id, &dbuser.name, &dbuser.email, &dbuser.password, &dbuser.created_at, &dbuser.updated_at)
 	if err != nil {
 		return nil, err
 	}
 
-	// created_atフィールドがnullでないならば
-	if createdAt.Valid {
-		user.createdAt = createdAt.Time
-	}
-	// updated_atフィールドがnullでないならば
-	if updatedAt.Valid {
-		user.updatedAt = updatedAt.Time
-	}
+	// DB用モデルからドメインモデルを生成
+	user, err := domain.NewUser(dbuser.name, dbuser.email, dbuser.password)
 
-	return 
+	return user, nil
 }
