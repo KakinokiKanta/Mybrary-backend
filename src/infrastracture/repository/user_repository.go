@@ -53,6 +53,9 @@ func (repo UserRepository) FindByEmail(email string) (*domain.User, error) {
 
 	// DB用モデルからドメインモデルを生成
 	user, err := domain.NewUser(dbuser.name, dbuser.email, dbuser.password)
+	if err != nil {
+		return nil, err
+	}
 
 	return user, nil
 }
