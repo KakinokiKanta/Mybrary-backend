@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"errors"
-	"time"
 
 	"github.com/KakinokiKanta/Mybrary-backend/domain"
 )
@@ -22,7 +21,6 @@ type CreateUserOutputDTO struct {
 	Name string `json:"name"`
 	Email string `json:"email"`
 	Password string `json:"password"`
-	CreatedAt string `json:"created_at"`
 }
 
 func NewCreateUserUsecase(userRepo domain.UserRepository) *CreateUserUsecase {
@@ -58,6 +56,5 @@ func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutput
 		Name: createdUser.Name(),
 		Email: createdUser.Email(),
 		Password: createdUser.Password(),
-		CreatedAt: createdUser.CreatedAt().Format(time.RFC3339),
 	}, nil
 }

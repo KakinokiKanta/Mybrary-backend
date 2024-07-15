@@ -3,7 +3,6 @@ package domain
 import (
 	"errors"
 	"net/mail"
-	"time"
 	"unicode/utf8"
 
 	"github.com/oklog/ulid/v2"
@@ -17,7 +16,6 @@ type User struct {
 	name      string
 	email     string
 	password  string
-	createdAt time.Time
 }
 
 type UserRepository interface {
@@ -31,9 +29,6 @@ type UserRepository interface {
 func NewUser(name string, email string, password string) (*User, error) {
 	// ULIDを生成し、string型に変換し、UserID型に変換
 	id := UserID(ulid.Make().String())
-
-	// 現在時刻を、記事ドメイン生成時刻とする
-	createdAt := time.Now()
 
 	// ユーザ名のバリデーション
 	if utf8.RuneCountInString(name) < userNameLengthMin || userNameLengthMax < utf8.RuneCountInString(name) {
@@ -62,7 +57,6 @@ func NewUser(name string, email string, password string) (*User, error) {
 		name: name,
 		email: addr.Address,
 		password: string(hash_pass),
-		createdAt: createdAt,
 	}, nil
 }
 
@@ -80,10 +74,6 @@ func (user User) Email() string {
 
 func (user User) Password() string {
 	return user.password
-}
-
-func (user User) CreatedAt() time.Time {
-	return user.createdAt
 }
 
 func (user User) IsValidPassword(password string) bool {

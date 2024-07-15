@@ -19,11 +19,11 @@ func NewUserRepository(db *sql.DB) UserRepository {
 func (repo UserRepository) Create(user domain.User) (domain.User, error) {
 	// usersテーブルにデータを追加するクエリ
 	var query = `
-		INSERT INTO users (id, name, email, password, created_at) VALUES (?, ?, ?, ?, ?);
+		INSERT INTO users (id, name, email, password) VALUES (?, ?, ?, ?);
 	`
 
 	// クエリを実行し、userドメインのフィールドを追加
-	_, err := repo.db.Exec(query, user.ID(), user.Name(), user.Email(), user.Password(), user.CreatedAt())
+	_, err := repo.db.Exec(query, user.ID(), user.Name(), user.Email(), user.Password())
 	if err != nil {
 		return domain.User{}, err
 	}
