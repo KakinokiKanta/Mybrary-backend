@@ -1,4 +1,5 @@
 # ユーザデータを格納するためのテーブル
+# TODO: created_atとupdate_atはデータベースの設定によって自動で埋めるようにしたい
 CREATE TABLE users (
   id VARCHAR(128) NOT NULL PRIMARY KEY,
   name VARCHAR(64) NOT NULL,
