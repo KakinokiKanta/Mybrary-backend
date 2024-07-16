@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"database/sql"
 	"errors"
 
 	"github.com/KakinokiKanta/Mybrary-backend/domain"
@@ -36,12 +37,13 @@ func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutput
 		return nil, err
 	}
 
-	// メールアドレスがDB内に存在しないかチェック
-	DuplicatedUser, err := uc.userRepo.FindByEmail(user.Email())
-	if err != nil {
+	// 同一メールアドレスがDB内に存在しないかチェック
+	_, err = uc.userRepo.FindByEmail(user.Email())
+	// TODO: ここの書き方がおかしい
+	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
-	if DuplicatedUser != nil {
+	if err != sql.ErrNoRows {
 		return nil, errors.New("this email address is already registered")
 	}
 
