@@ -20,7 +20,7 @@ type User struct {
 
 type UserRepository interface {
 	Create(User) (User, error)
-	FindByEmail(string) (*User, error)
+	FindByEmail(string) (User, error)
 	// TODO: 現状使わず、未実装のメソッドなのでコメントアウト
 	// FindById(UserID) (User, error)
 	// Update(User) (User, error)
