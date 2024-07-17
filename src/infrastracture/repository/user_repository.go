@@ -46,7 +46,7 @@ func (repo UserRepository) FindByEmail(email string) (domain.User, error) {
 	var dbuser dbUser
 
 	// 取得したカラムから、DB用userモデルの各フィールドに値をスキャン
-	err := row.Scan(&dbuser.id, &dbuser.name, &dbuser.email, &dbuser.password, &dbuser.created_at, &dbuser.updated_at)
+	err := row.Scan(&dbuser.id, &dbuser.name, &dbuser.email, &dbuser.password)
 	if err != nil {
 		return domain.User{}, err
 	}
