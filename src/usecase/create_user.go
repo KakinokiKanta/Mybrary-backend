@@ -39,12 +39,11 @@ func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutput
 
 	// 同一メールアドレスがDB内に存在しないかチェック
 	_, err = uc.userRepo.FindByEmail(user.Email())
-	// TODO: ここの書き方がおかしい
-	if err != nil && err != sql.ErrNoRows {
-		return nil, err
+	if err == nil {
+		return nil, errors.New("this email address is already registered")
 	}
 	if err != sql.ErrNoRows {
-		return nil, errors.New("this email address is already registered")
+		return nil, err
 	}
 
 	// Userドメインのリポジトリを用いて、Userの永続化
