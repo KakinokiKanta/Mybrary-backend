@@ -30,6 +30,7 @@ func NewFindUserUsecase(userRepo domain.UserRepository) *FindUserUsecase {
 	}
 }
 
+// ログイン機能
 func (uc FindUserUsecase) Execute(input FindUserInputDTO) (*FindUserOutputDTO, error) {
 	// Userドメインを生成
 	user, err := domain.NewUser(input.Name, input.Email, input.Password)
