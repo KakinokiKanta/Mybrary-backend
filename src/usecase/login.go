@@ -12,9 +12,7 @@ type FindUserUsecase struct {
 }
 
 type FindUserInputDTO struct {
-	Name     string `json:"name" binding:"required,min=1,max=20"`
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required,min=10,max=64"`
+	Email string `json:"email" binding:"required,email"`
 }
 
 type FindUserOutputDTO struct {
