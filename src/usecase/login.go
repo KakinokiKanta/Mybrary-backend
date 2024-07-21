@@ -32,8 +32,5 @@ func (uc LoginUsecase) Execute(input LoginInputDTO) (bool, error) {
 		return false, err
 	}
 
-	// JWTと取得したユーザ情報を基に認証処理
-	// usecase内にインターフェースを実装、中身はmiddlewareに
-
 	return input.Password == user.Password(), nil
 }
