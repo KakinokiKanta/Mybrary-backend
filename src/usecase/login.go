@@ -29,7 +29,7 @@ func (uc LoginUsecase) Execute(input LoginInputDTO) (bool, error) {
 	// メールアドレスでDB内を検索しユーザ情報を取得
 	user, err := uc.userRepo.FindByEmail(input.Email)
 	if err != nil {
-		return nil, err
+		return false, err
 	}
 
 	// JWTと取得したユーザ情報を基に認証処理
