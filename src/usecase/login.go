@@ -7,37 +7,28 @@ import (
 	"github.com/KakinokiKanta/Mybrary-backend/domain"
 )
 
-type FindUserUsecase struct {
+type LoginUsecase struct {
 	userRepo domain.UserRepository
 }
 
-type FindUserInputDTO struct {
-	Email string `json:"email" binding:"required,email"`
+type LoginInputDTO struct {
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=10,max=64"`
 }
 
-type FindUserOutputDTO struct {
-	Id       domain.UserID `json:"id"`
-	Name     string        `json:"name"`
-	Email    string        `json:"email"`
-	Password string        `json:"passdomain`
+type LoginOutputDTO struct {
+	Token string `json:"token"`
 }
 
-func NewFindUserUsecase(userRepo domain.UserRepository) *FindUserUsecase {
-	return &FindUserUsecase{
+func NewLoginUsecase(userRepo domain.UserRepository) *LoginUsecase {
+	return &LoginUsecase{
 		userRepo: userRepo,
 	}
 }
 
-// ログイン機能
-func (uc FindUserUsecase) Execute(input FindUserInputDTO) (*FindUserOutputDTO, error) {
-	// Userドメインを生成
-	user, err := domain.NewUser(input.Name, input.Email, input.Password)
-	if err != nil {
-		return nil, err
-	}
-
+func (uc LoginUsecase) Execute(input LoginInputDTO) (*LoginOutputDTO, error) {
 	// 同一メールアドレスがDB内に存在しないかチェック
-	_, err = uc.userRepo.FindByEmail(user.Email())
+	_, err = uc.userRepo.FindByEmail(input.Email)
 	if err == nil {
 		return nil, errors.New("this email address is already registered")
 	}
