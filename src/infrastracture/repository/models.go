@@ -4,10 +4,10 @@ import (
 	"database/sql"
 )
 
-/**
+/*
  * ドメイン層のモデルに対して、このファイルでは、
  * データベースのテーブルを構造体としたモデルを定義する
- */
+**/
 type dbUser struct {
 	id         string
 	name       string

@@ -1,9 +1,6 @@
 package usecase
 
 import (
-	"database/sql"
-	"errors"
-
 	"github.com/KakinokiKanta/Mybrary-backend/domain"
 )
 
@@ -26,21 +23,21 @@ func NewLoginUsecase(userRepo domain.UserRepository) *LoginUsecase {
 	}
 }
 
+/*
+ * ここではトークンの生成は行わず、ログインの成否だけを判定する
+ * これにより、トークン生成を行う外部パッケージに依存しない
+ * また、認証手段を変更しやすくしている
+ */
 func (uc LoginUsecase) Execute(input LoginInputDTO) (*LoginOutputDTO, error) {
-	// 同一メールアドレスがDB内に存在しないかチェック
-	_, err = uc.userRepo.FindByEmail(input.Email)
-	if err == nil {
-		return nil, errors.New("this email address is already registered")
-	}
-	if err != sql.ErrNoRows {
-		return nil, err
-	}
-
-	// Userドメインのリポジトリを用いて、Userの永続化
-	createdUser, err := uc.userRepo.FindByEmail(/*string*/)
+	// TODO: DB内に同一メールアドレスが複数存在している場合のために、以下の処理をループさせる？
+	// メールアドレスでDB内を検索しユーザ情報を取得
+	user, err := uc.userRepo.FindByEmail(input.Email)
 	if err != nil {
 		return nil, err
 	}
+
+	// JWTと取得したユーザ情報を基に認証処理
+	// usecase内にインターフェースを実装、中身はmiddlewareに
 
 	return &FindUserOutputDTO{
 		Id:       createdUser.ID(),
