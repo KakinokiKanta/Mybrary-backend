@@ -32,5 +32,5 @@ func (uc LoginUsecase) Execute(input LoginInputDTO) (string, bool) {
 		return string(user.ID()), false
 	}
 
-	return string(user.ID()), input.Password == user.Password()
+	return string(user.ID()), user.IsValidPassword(input.Password)
 }
