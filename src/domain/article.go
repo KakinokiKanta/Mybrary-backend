@@ -5,7 +5,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/oklog/ulid/v2"
+	"github.com/KakinokiKanta/Mybrary-backend/pkg"
 )
 
 type ArticleID string
@@ -36,7 +36,7 @@ func NewArticle(
 	tags []ArticleTag,
 ) (*Article, error) {
 	// ulidパッケージでULIDを生成し、string型に変換し、ArticleID型に変換
-	id := ArticleID(ulid.Make().String())
+	id := ArticleID(pkg.NewULID())
 
 	// timeパッケージで現在時刻を、記事ドメイン生成時刻とする
 	createdAt := time.Now()

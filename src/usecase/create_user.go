@@ -1,7 +1,8 @@
 package usecase
 
 import (
-	"time"
+	"database/sql"
+	"errors"
 
 	"github.com/KakinokiKanta/Mybrary-backend/domain"
 )
@@ -11,13 +12,16 @@ type CreateUserUsecase struct {
 }
 
 type CreateUserInputDTO struct {
-	Name string `json:"name"`
+	Name string `json:"name" binding:"required,min=1,max=20"`
+	Email string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=10,max=64"`
 }
 
 type CreateUserOutputDTO struct {
 	Id domain.UserID `json:"id"`
 	Name string `json:"name"`
-	CreatedAt string `json:"created_at"`
+	Email string `json:"email"`
+	Password string `json:"password"`
 }
 
 func NewCreateUserUsecase(userRepo domain.UserRepository) *CreateUserUsecase {
@@ -28,8 +32,17 @@ func NewCreateUserUsecase(userRepo domain.UserRepository) *CreateUserUsecase {
 
 func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutputDTO, error) {
 	// Userドメインを生成
-	user, err := domain.NewUser(input.Name)
+	user, err := domain.NewUser(input.Name, input.Email, input.Password)
 	if err != nil {
+		return nil, err
+	}
+
+	// 同一メールアドレスがDB内に存在しないかチェック
+	_, err = uc.userRepo.FindByEmail(user.Email())
+	if err == nil {
+		return nil, errors.New("this email address is already registered")
+	}
+	if err != sql.ErrNoRows {
 		return nil, err
 	}
 
@@ -42,6 +55,7 @@ func (uc CreateUserUsecase) Execute(input CreateUserInputDTO) (*CreateUserOutput
 	return &CreateUserOutputDTO{
 		Id: createdUser.ID(),
 		Name: createdUser.Name(),
-		CreatedAt: createdUser.CreatedAt().Format(time.RFC3339),
+		Email: createdUser.Email(),
+		Password: createdUser.Password(),
 	}, nil
 }

@@ -9,7 +9,7 @@ import (
 )
 
 func TestCreateUserRepository(t *testing.T) {
-	userDomain, _ := domain.NewUser("Test user")
+	userDomain, _ := domain.NewUser("Test user", "test@mail.com", "abcdefg1234AABBCCDD")
 
 	tests := []struct {
 		testName string
