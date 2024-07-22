@@ -30,12 +30,8 @@ func SetupRouter(db *sql.DB) {
 	authRouter.POST("/register", createUserController.Execute)
 	authRouter.POST("login", jwtMiddleware.LoginHandler)
 
-	checkRouter := r.Group("/ping", jwtMiddleware.MiddlewareFunc())
-	checkRouter.GET("", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	healthRouter := r.Group("/health", jwtMiddleware.MiddlewareFunc())
+	healthRouter.GET("", controller.Health)
 
 	r.Run() // dockerでポート8080を指定しているため、ここでは指定しない
 }
