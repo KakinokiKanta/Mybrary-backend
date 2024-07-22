@@ -24,13 +24,13 @@ func NewLoginUsecase(userRepo domain.UserRepository) *LoginUsecase {
  * これにより、トークン生成を行う外部パッケージに依存しない
  * また、認証手段を変更しやすくしている
  */
-func (uc LoginUsecase) Execute(input LoginInputDTO) (bool, error) {
+func (uc LoginUsecase) Execute(input LoginInputDTO) (string, bool) {
 	// TODO: DB内に同一メールアドレスが複数存在している場合のために、以下の処理をループさせる？
 	// メールアドレスでDB内を検索しユーザ情報を取得
 	user, err := uc.userRepo.FindByEmail(input.Email)
 	if err != nil {
-		return false, err
+		return string(user.ID()), false
 	}
 
-	return input.Password == user.Password(), nil
+	return string(user.ID()), input.Password == user.Password()
 }
