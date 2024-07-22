@@ -28,6 +28,10 @@ func (con CreateUserController) Execute(ctx *gin.Context) {
 	// 新規ユーザ登録のユースケースを実行
 	registeredUser, err := con.uc.Execute(input)
 	if err != nil {
+		if err.Error() == "this email address is already registered" {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

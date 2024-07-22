@@ -3,13 +3,13 @@ package domain
 import (
 	"testing"
 
+	"github.com/KakinokiKanta/Mybrary-backend/pkg"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"github.com/oklog/ulid/v2"
 )
 
 func TestNewArticle(t *testing.T) {
-	userID := UserID(ulid.Make().String())
+	userID := UserID(pkg.NewULID())
 	type args struct {
 		userID UserID
 		url string

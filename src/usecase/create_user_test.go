@@ -9,8 +9,8 @@ import (
 )
 
 func TestCreateUserUsecase(t *testing.T) {
-	successMockResult, successMockErr := domain.NewUser("Test user")
-	failMockResult, failMockErr := domain.NewUser("")
+	successMockResult, successMockErr := domain.NewUser("Test user", "test@gmail.com", "abcdefg1234AABBCCDD")
+	failMockResult, failMockErr := domain.NewUser("", "", "")
 
 	tests := []struct {
 		testName string
@@ -27,9 +27,13 @@ func TestCreateUserUsecase(t *testing.T) {
 			},
 			args: CreateUserInputDTO{
 				Name: "Test user",
+				Email: "test@gmail.com",
+				Password: "abcdefg1234AABBCCDD",
 			},
 			expected: &CreateUserOutputDTO{
 				Name: "Test user",
+				Email: "test@gmail.com",
+				Password: "abcdefg1234AABBCCDD",
 			},
 			expectedErr: false,
 		},
@@ -41,6 +45,8 @@ func TestCreateUserUsecase(t *testing.T) {
 			},
 			args: CreateUserInputDTO{
 				Name: "",
+				Email: "",
+				Password: "",
 			},
 			expected: nil,
 			expectedErr: true,
