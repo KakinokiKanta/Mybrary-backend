@@ -2,7 +2,6 @@ package domain
 
 import (
 	"errors"
-	"time"
 	"unicode/utf8"
 
 	"github.com/KakinokiKanta/Mybrary-backend/pkg"
@@ -36,9 +35,6 @@ func NewArticle(
 ) (*Article, error) {
 	// ulidパッケージでULIDを生成し、string型に変換し、ArticleID型に変換
 	id := ArticleID(pkg.NewULID())
-
-	// timeパッケージで現在時刻を、記事ドメイン生成時刻とする
-	createdAt := time.Now()
 
 	// URLのバリデーション
 	if utf8.RuneCountInString(url) < urlLengthMin {
