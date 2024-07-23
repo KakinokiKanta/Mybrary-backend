@@ -5,9 +5,14 @@ import (
 	"unicode/utf8"
 )
 
+type ArticleTagID string
 type TagName string
 
+// TODO: idを主キーとしてUserIDとtagNameに複合ユニーク制約を設けるか、
+// UserIDとtagNameで複合キーとするか悩み中
 type ArticleTag struct {
+	id      ArticleTagID
+	UserID
 	tagName TagName
 	usedNum int
 }
