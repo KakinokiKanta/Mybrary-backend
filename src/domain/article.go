@@ -16,7 +16,6 @@ type Article struct {
 	url         string
 	title       string
 	description string
-	createdAt   time.Time
 	tags        []ArticleTag
 }
 
@@ -64,7 +63,6 @@ func NewArticle(
 		url: url,
 		title: title,
 		description: description,
-		createdAt: createdAt,
 		tags: tags,
 	}, nil
 }
@@ -87,10 +85,6 @@ func (article Article) Title() string {
 
 func (article Article) Description() string {
 	return article.description
-}
-
-func (article Article) CreatedAt() time.Time {
-	return article.createdAt
 }
 
 func (article Article) Tags() []ArticleTag {
