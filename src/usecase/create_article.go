@@ -34,3 +34,20 @@ func NewCreateArticleUseCase (articleRepo domain.ArticleRepository) *CreateArtic
 		articleRepo: articleRepo,
 	}
 }
+
+func (uc CreateArticleUseCase) Execute(input CreateArticleInputDto) (*CreateArticleOutputDto, error) {
+	return &CreateArticleOutputDto{
+		ArticleID: domain.ArticleID("aa"),
+		UserID: "bb",
+		Url: "cc",
+		Title: "dd",
+		Description: "ee",
+		Tags: []ArticleTag{
+			{
+				TagID: "ff",
+				TagName: "gg",
+				UsedNum: 11,
+			},
+		},
+	}, nil
+}
