@@ -1,9 +1,9 @@
 package usecase
 
-import articleDomain "github.com/KakinokiKanta/Mybrary-backend/domain"
+import "github.com/KakinokiKanta/Mybrary-backend/domain"
 
 type CreateArticleUseCase struct {
-	articleRepo articleDomain.ArticleRepository
+	articleRepo domain.ArticleRepository
 }
 
 type CreateArticleInputDto struct {
@@ -11,14 +11,25 @@ type CreateArticleInputDto struct {
 	Url         string `json:"url" binding:"required"`
 	Title       string `json:"title" binding:"required"`
 	Description string `json:"description"`
-	Tags        []articleDomain.ArticleTag `json: tags`
+	Tags        []string `json:"tags"`
+}
+
+type CreateArticleOutputDto struct {
+	ArticleID   domain.ArticleID `json:"id"`
+	UserID      string `json:"user_id"`
+	Url         string `json:"url"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Tags        []ArticleTag `json:"tags"`
 }
 
 type ArticleTag struct {
-	TagName string `json:"tag_name" binding:"required"`
+	TagID string `json:"tag_id"`
+	TagName string `json:"tag_name"`
+	UsedNum int `json:"used_num"`
 }
 
-func NewCreateArticleUseCase (articleRepo articleDomain.ArticleRepository) *CreateArticleUseCase {
+func NewCreateArticleUseCase (articleRepo domain.ArticleRepository) *CreateArticleUseCase {
 	return &CreateArticleUseCase{
 		articleRepo: articleRepo,
 	}
