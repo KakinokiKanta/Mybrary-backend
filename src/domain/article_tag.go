@@ -6,21 +6,18 @@ import (
 )
 
 type ArticleTagID string
-type TagName string
 
-// TODO: idを主キーとしてUserIDとtagNameに複合ユニーク制約を設けるか、
-// UserIDとtagNameで複合キーとするか悩み中
 type ArticleTag struct {
 	id      ArticleTagID
 	UserID
-	tagName TagName
+	tagName string
 	usedNum int
 }
 
 type ArticleTagRepository interface {
 	Create(ArticleTag) (ArticleTag, error)
 	FindByName(string) (ArticleTag, error)
-	UpdateNum(TagName) (ArticleTag, error)
+	UpdateNum(string) (ArticleTag, error)
 }
 
 func NewArticleTag(name string, usedNum int) (*ArticleTag, error) {
@@ -30,12 +27,12 @@ func NewArticleTag(name string, usedNum int) (*ArticleTag, error) {
 	}
 
 	return &ArticleTag{
-		tagName: TagName(name),
+		tagName: name,
 		usedNum: usedNum,
 	}, nil
 }
 
-func (articleTag ArticleTag) TagName() TagName {
+func (articleTag ArticleTag) TagName() string {
 	return articleTag.tagName
 }
 
