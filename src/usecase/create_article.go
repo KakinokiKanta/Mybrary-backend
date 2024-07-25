@@ -1,6 +1,8 @@
 package usecase
 
-import "github.com/KakinokiKanta/Mybrary-backend/domain"
+import (
+	"github.com/KakinokiKanta/Mybrary-backend/domain"
+)
 
 type CreateArticleUseCase struct {
 	articleRepo domain.ArticleRepository
@@ -36,6 +38,20 @@ func NewCreateArticleUseCase (articleRepo domain.ArticleRepository) *CreateArtic
 }
 
 func (uc CreateArticleUseCase) Execute(input CreateArticleInputDto) (*CreateArticleOutputDto, error) {
+	// ArticleTagドメインを生成]
+	var articleTagList = []ArticleTag{}
+	for _, tagName := range input.Tags {
+		articleTag, err := domain.NewArticleTag(domain.UserID(input.UserID), tagName)
+		// TODO: 既に存在するタグかどうかを判定する処理が必要
+		articleTagList = append(articleTagList,
+			ArticleTag{
+				string(articleTag.ID()),
+				articleTag.TagName(),
+				articleTag.UsedNum(),
+			},
+		)
+	}
+
 	return &CreateArticleOutputDto{
 		ArticleID: domain.ArticleID("aa"),
 		UserID: "bb",
