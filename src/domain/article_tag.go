@@ -23,14 +23,29 @@ type ArticleTagRepository interface {
 	UpdateNum(string) (ArticleTag, error)
 }
 
-func NewArticleTag(userID UserID, name string, usedNum int) (*ArticleTag, error) {
-	// 記事タグのバリデーション
+func NewArticleTag(userID UserID, name string) (*ArticleTag, error) {
+	return newArticleTag(
+		ArticleTagID(pkg.NewULID()), userID, name, 0,
+	)
+}
+
+func ReArticleTag(articleTagID ArticleTagID, userID UserID, name string, usedNum int) (*ArticleTag, error) {
+	return newArticleTag(articleTagID, userID, name, usedNum)
+}
+
+func newArticleTag(articleTagID ArticleTagID, userID UserID, name string, usedNum int) (*ArticleTag, error) {
+	// 記事タグIDのバリデーション
+	if !pkg.IsValid(string(articleTagID)) {
+		return nil, errors.New("id is an incorrect value")
+	}
+
+	// 記事タグ数のバリデーション
 	if utf8.RuneCountInString(name) < tagLengthMin || tagLengthMax < utf8.RuneCountInString(name) {
 		return nil, errors.New("name is an incorrect value")
 	}
 
 	return &ArticleTag{
-		id: ArticleTagID(pkg.NewULID()),
+		id: articleTagID,
 		UserID: userID,
 		tagName: name,
 		usedNum: usedNum,
