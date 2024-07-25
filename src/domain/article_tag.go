@@ -3,10 +3,13 @@ package domain
 import (
 	"errors"
 	"unicode/utf8"
+
+	"github.com/KakinokiKanta/Mybrary-backend/pkg"
 )
 
 type ArticleTagID string
 
+// TODO: 記事タグを機構造にするかも? parentArticleTagID
 type ArticleTag struct {
 	id      ArticleTagID
 	UserID
@@ -20,13 +23,15 @@ type ArticleTagRepository interface {
 	UpdateNum(string) (ArticleTag, error)
 }
 
-func NewArticleTag(name string, usedNum int) (*ArticleTag, error) {
+func NewArticleTag(userID UserID, name string, usedNum int) (*ArticleTag, error) {
 	// 記事タグのバリデーション
 	if utf8.RuneCountInString(name) < tagLengthMin || tagLengthMax < utf8.RuneCountInString(name) {
 		return nil, errors.New("name is an incorrect value")
 	}
 
 	return &ArticleTag{
+		id: ArticleTagID(pkg.NewULID()),
+		UserID: userID,
 		tagName: name,
 		usedNum: usedNum,
 	}, nil
