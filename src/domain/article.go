@@ -21,6 +21,7 @@ type Article struct {
 type ArticleRepository interface {
 	Create(Article) (Article, error)
 	FindByArticleId(ArticleID) (Article, error)
+	FindByUrl(string) (Article, error)
 	FindByUserID(UserID) ([]Article, error)
 	Update(Article) (Article, error)
 	Delete(Article) error
