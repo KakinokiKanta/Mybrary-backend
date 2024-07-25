@@ -52,6 +52,10 @@ func newArticleTag(articleTagID ArticleTagID, userID UserID, name string, usedNu
 	}, nil
 }
 
+func (articleTag ArticleTag) ID() ArticleTagID {
+	return articleTag.id
+}
+
 func (articleTag ArticleTag) TagName() string {
 	return articleTag.tagName
 }
