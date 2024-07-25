@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/KakinokiKanta/Mybrary-backend/domain"
+	repositorymock "github.com/KakinokiKanta/Mybrary-backend/usecase/repository_mock"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
@@ -21,9 +22,9 @@ func TestCreateUserUsecase(t *testing.T) {
 	}{
 		{
 			testName: "Successfully create user",
-			repository: mockUserRepoStore{
-				result: successMockResult,
-				err: successMockErr,
+			repository: repositorymock.MockUserRepoStore{
+				Result: successMockResult,
+				Err: successMockErr,
 			},
 			args: CreateUserInputDTO{
 				Name: "Test user",
@@ -39,9 +40,9 @@ func TestCreateUserUsecase(t *testing.T) {
 		},
 		{
 			testName: "Unsuccessfully create user",
-			repository: mockUserRepoStore{
-				result: failMockResult,
-				err: failMockErr,
+			repository: repositorymock.MockUserRepoStore{
+				Result: failMockResult,
+				Err: failMockErr,
 			},
 			args: CreateUserInputDTO{
 				Name: "",
