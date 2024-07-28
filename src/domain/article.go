@@ -2,7 +2,6 @@ package domain
 
 import (
 	"errors"
-	"time"
 	"unicode/utf8"
 
 	"github.com/KakinokiKanta/Mybrary-backend/pkg"
@@ -16,13 +15,13 @@ type Article struct {
 	url         string
 	title       string
 	description string
-	createdAt   time.Time
 	tags        []ArticleTag
 }
 
 type ArticleRepository interface {
 	Create(Article) (Article, error)
 	FindByArticleId(ArticleID) (Article, error)
+	FindByUrl(string) (Article, error)
 	FindByUserID(UserID) ([]Article, error)
 	Update(Article) (Article, error)
 	Delete(Article) error
@@ -37,9 +36,6 @@ func NewArticle(
 ) (*Article, error) {
 	// ulidパッケージでULIDを生成し、string型に変換し、ArticleID型に変換
 	id := ArticleID(pkg.NewULID())
-
-	// timeパッケージで現在時刻を、記事ドメイン生成時刻とする
-	createdAt := time.Now()
 
 	// URLのバリデーション
 	if utf8.RuneCountInString(url) < urlLengthMin {
@@ -64,7 +60,6 @@ func NewArticle(
 		url: url,
 		title: title,
 		description: description,
-		createdAt: createdAt,
 		tags: tags,
 	}, nil
 }
@@ -87,10 +82,6 @@ func (article Article) Title() string {
 
 func (article Article) Description() string {
 	return article.description
-}
-
-func (article Article) CreatedAt() time.Time {
-	return article.createdAt
 }
 
 func (article Article) Tags() []ArticleTag {
