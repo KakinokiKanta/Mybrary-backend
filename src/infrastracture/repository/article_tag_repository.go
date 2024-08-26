@@ -33,12 +33,12 @@ func (repo ArticleTagRepository) Create(articleTag domain.ArticleTag) (domain.Ar
 }
 
 func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, error) {
-	// tagsテーブルからemailフィールドが一致するカラムを取得するクエリ
+	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
 	var query = `
 		SELECT id, user_id, tag_name, used_num FROM tags WHERE tag_name = ?;
 	`
 
-	// nameが一致したカラムを取得
+	// nameが一致したレコードを取得
 	row := repo.db.QueryRow(query, name)
 	if err := row.Err(); err != nil {
 		return domain.ArticleTag{}, err
@@ -46,7 +46,7 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 
 	var dbTag dbTag
 
-	// 取得したカラムから、DB用tagモデルの各フィールドに値をスキャン
+	// 取得したレコードから、DB用tagモデルの各フィールドに値をスキャン
 	err := row.Scan(&dbTag.id, &dbTag.user_id, &dbTag.tag_name, &dbTag.used_num)
 	if err != nil {
 		return domain.ArticleTag{}, err
