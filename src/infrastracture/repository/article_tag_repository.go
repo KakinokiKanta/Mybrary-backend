@@ -64,3 +64,7 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 
 	return *articleTag, nil
 }
+
+func (repo ArticleTagRepository) UpdateNum(string) (domain.ArticleTag, error) {
+	return domain.ArticleTag{}, nil
+}
