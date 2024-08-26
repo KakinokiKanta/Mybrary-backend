@@ -65,6 +65,11 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 	return *articleTag, nil
 }
 
-func (repo ArticleTagRepository) UpdateNum(string) (domain.ArticleTag, error) {
+func (repo ArticleTagRepository) UpdateNum(id string) (domain.ArticleTag, error) {
+	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
+	var query = `
+		UPDATE tags SET used_num = ? WHERE id = ?;
+	`
+
 	return domain.ArticleTag{}, nil
 }
