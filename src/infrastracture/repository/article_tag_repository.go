@@ -65,11 +65,36 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 	return *articleTag, nil
 }
 
-func (repo ArticleTagRepository) UpdateNum(id string) (domain.ArticleTag, error) {
-	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
-	var query = `
-		UPDATE tags SET used_num = ? WHERE id = ?;
-	`
+// TODO: 後で実装
+// func (repo ArticleTagRepository) UpdateNum(id string) (domain.ArticleTag, error) {
+// 	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
+// 	var updateQuery = `
+// 		UPDATE tags SET used_num = ? WHERE id = ?;
+// 	`
+// 	// tagsテーブルからidフィールドが一致するレコードを取得するクエリ
+// 	var selectQuery = `
+// 		SELECT id, user_id, tag_name, used_num FROM tags WHERE id = ?;
+// 	`
 
-	return domain.ArticleTag{}, nil
-}
+// 	// nameが一致したレコードを取得
+// 	row := repo.db.QueryRow(query, name)
+// 	if err := row.Err(); err != nil {
+// 		return domain.ArticleTag{}, err
+// 	}
+
+// 	var dbTag dbTag
+
+// 	// 取得したレコードから、DB用tagモデルの各フィールドに値をスキャン
+// 	err := row.Scan(&dbTag.id, &dbTag.user_id, &dbTag.tag_name, &dbTag.used_num)
+// 	if err != nil {
+// 		return domain.ArticleTag{}, err
+// 	}
+
+// 	// クエリを実行し、userドメインのフィールドを追加
+// 	_, err := repo.db.Exec(updateQuery, id, id)
+// 	if err != nil {
+// 		return domain.ArticleTag{}, err
+// 	}
+
+// 	return domain.ArticleTag{}, nil
+// }
