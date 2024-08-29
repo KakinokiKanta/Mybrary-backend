@@ -20,7 +20,7 @@ func NewArticleTagRepository(db *sql.DB) ArticleTagRepository {
 func (repo ArticleTagRepository) Create(articleTag domain.ArticleTag) (domain.ArticleTag, error) {
 	// tagsテーブルにデータを追加するクエリ
 	var query = `
-		INSERT INTO tags (id, user_id, tag_name, used_num) VALUES (?, ?, ?, ?);
+		INSERT INTO tags (id, user_id, name, used_num) VALUES (?, ?, ?, ?);
 	`
 
 	// クエリを実行し、userドメインのフィールドを追加
@@ -35,7 +35,7 @@ func (repo ArticleTagRepository) Create(articleTag domain.ArticleTag) (domain.Ar
 func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, error) {
 	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
 	var query = `
-		SELECT id, user_id, tag_name, used_num FROM tags WHERE tag_name = ?;
+		SELECT id, user_id, name, used_num FROM tags WHERE name = ?;
 	`
 
 	// nameが一致したレコードを取得
@@ -47,7 +47,7 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 	var dbTag dbTag
 
 	// 取得したレコードから、DB用tagモデルの各フィールドに値をスキャン
-	err := row.Scan(&dbTag.id, &dbTag.user_id, &dbTag.tag_name, &dbTag.used_num)
+	err := row.Scan(&dbTag.id, &dbTag.user_id, &dbTag.name, &dbTag.used_num)
 	if err != nil {
 		return domain.ArticleTag{}, err
 	}
@@ -57,7 +57,7 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 	if err != nil {
 		return domain.ArticleTag{}, err
 	}
-	articleTag, err := domain.ReArticleTag(domain.ArticleTagID(dbTag.id), domain.UserID(dbTag.user_id), dbTag.tag_name, num)
+	articleTag, err := domain.ReArticleTag(domain.ArticleTagID(dbTag.id), domain.UserID(dbTag.user_id), dbTag.name, num)
 	if err != nil {
 		return domain.ArticleTag{}, err
 	}
