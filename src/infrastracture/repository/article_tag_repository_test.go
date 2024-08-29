@@ -38,7 +38,7 @@ func TestCreateArticleTagRepository(t *testing.T) {
 			}
 			diff := cmp.Diff(
 				result, tt.expected,
-				cmp.AllowUnexported(domain.User{}),
+				cmp.AllowUnexported(domain.ArticleTag{}),
 			)
 			if diff != "" {
 				t.Errorf("[TestCase '%s'] Result: '%v' | Expected: '%v'", tt.testName, result, tt.expected)
