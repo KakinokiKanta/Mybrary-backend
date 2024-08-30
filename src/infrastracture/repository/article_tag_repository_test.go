@@ -9,7 +9,7 @@ import (
 )
 
 func TestCreateArticleTagRepository(t *testing.T) {
-	articleTagDomain, _ := domain.NewArticleTag("abcdefg1234AABBCCDD", "New Article Tag")
+	succeedDomain, _ := domain.NewArticleTag("abcdefg1234AABBCCDD", "New Article Tag")
 
 	tests := []struct {
 		testName string
@@ -21,9 +21,16 @@ func TestCreateArticleTagRepository(t *testing.T) {
 		{
 			testName: "Successfully create article tag",
 			db: testDB,
-			args: *articleTagDomain,
-			expected: *articleTagDomain,
+			args: *succeedDomain,
+			expected: *succeedDomain,
 			expectedErr: false,
+		},
+		{
+			testName: "Failure: create article tag (this article tag exists in DB)",
+			db: testDB,
+			args: *succeedDomain,
+			expected: domain.ArticleTag{},
+			expectedErr: true,
 		},
 	}
 
