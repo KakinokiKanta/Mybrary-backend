@@ -82,7 +82,7 @@ func TestFindArticleTagRepository(t *testing.T) {
 
 			result, err := repo.FindByName(tt.testName)
 			if (err != nil) != tt.expectedErr {
-				t.Errorf("[TestCase '%s'] Result: '%v' | ExpectedError: '%v'", tt.testName, err, tt.expectedErr)
+				t.Errorf("[TestCase '%s'] Result: '%v' | Error: '%v' | ExpectedError: '%v'", tt.testName, result, err, tt.expectedErr)
 				return
 			}
 			diff := cmp.Diff(
