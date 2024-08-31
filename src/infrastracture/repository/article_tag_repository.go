@@ -35,7 +35,7 @@ func (repo ArticleTagRepository) Create(articleTag domain.ArticleTag) (domain.Ar
 func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, error) {
 	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
 	var query = `
-		SELECT id, user_id, name, used_num FROM tags WHERE name = ?;
+		SELECT id, user_id, name, used_num FROM tags WHERE name = "?";
 	`
 
 	// nameが一致したレコードを取得

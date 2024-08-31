@@ -32,6 +32,6 @@ func setup() {
 
 // 接続したデータベースとのアクセスを閉じる後処理
 func teardown() {
-	infrastracture.CleanupDB()
+	// infrastracture.CleanupDB()
 	testDB.Close()
 }
