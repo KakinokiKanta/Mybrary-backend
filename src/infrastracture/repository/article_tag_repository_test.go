@@ -50,48 +50,6 @@ func TestCreateArticleTagRepository(t *testing.T) {
 			}
 		})
 	}
-
-	atests := []struct {
-		testName string
-		db *sql.DB
-		args string
-		expected domain.ArticleTag
-		expectedErr bool
-	}{
-		{
-			testName: "Successfully find article tag",
-			db: testDB,
-			args: succeedTagName,
-			expected: *succeedDomain,
-			expectedErr: false,
-		},
-		{
-			testName: "Failure: find article tag (this article tag does not exists in DB)",
-			db: testDB,
-			args: "Article Tag",
-			expected: domain.ArticleTag{},
-			expectedErr: true,
-		},
-	}
-
-	for _, tt := range atests {
-		t.Run(tt.testName, func(t *testing.T) {
-			repo := NewArticleTagRepository(testDB)
-
-			result, err := repo.FindByName(tt.testName)
-			if (err != nil) != tt.expectedErr {
-				t.Errorf("[TestCase '%s'] Result: '%v' | Error: '%v' | ExpectedError: '%v'", tt.testName, result, err, tt.expectedErr)
-				return
-			}
-			diff := cmp.Diff(
-				result, tt.expected,
-				cmp.AllowUnexported(domain.ArticleTag{}),
-			)
-			if diff != "" {
-				t.Errorf("[TestCase '%s'] Result: '%v' | Expected: '%v'", tt.testName, result, tt.expected)
-			}
-		})
-	}
 }
 
 func TestFindArticleTagRepository(t *testing.T) {
@@ -122,9 +80,10 @@ func TestFindArticleTagRepository(t *testing.T) {
 		t.Run(tt.testName, func(t *testing.T) {
 			repo := NewArticleTagRepository(testDB)
 
-			result, err := repo.FindByName(tt.testName)
+			result, err := repo.FindByName(tt.args)
 			if (err != nil) != tt.expectedErr {
-				t.Errorf("[TestCase '%s'] Result: '%v' | Error: '%v' | ExpectedError: '%v'", tt.testName, result, err, tt.expectedErr)
+				t.Errorf("[TestCase '%s'] Result: '%v' | ExpectedError: '%v'", tt.testName, err, tt.expectedErr)
+				t.Errorf("[TestCase '%s'] %s | %v | %v", tt.testName, tt.args, *succeedDomain, result)
 				return
 			}
 			diff := cmp.Diff(
