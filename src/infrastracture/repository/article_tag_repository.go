@@ -67,6 +67,11 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 	return *articleTag, nil
 }
 
+// tagsテーブルのuser_idフィールドが一致するすべてのレコードを取得するメソッド
+func (repo ArticleTagRepository) FindByUserID(id domain.UserID) ([]domain.ArticleTag, error) {
+	return nil, nil
+}
+
 // tagsテーブルのidフィールドが一致するレコードのused_numを1増やすメソッド
 func (repo ArticleTagRepository) UpdateNum(id domain.ArticleTagID) error {
 	// tagsテーブルのidフィールドが一致するレコードのused_numを1増やすクエリ
