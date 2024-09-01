@@ -20,7 +20,7 @@ type ArticleTag struct {
 type ArticleTagRepository interface {
 	Create(ArticleTag) (ArticleTag, error)
 	FindByName(string) (ArticleTag, error)
-	UpdateNum(string) (ArticleTag, error)
+	UpdateNum(string) error
 }
 
 func NewArticleTag(userID UserID, name string) (*ArticleTag, error) {

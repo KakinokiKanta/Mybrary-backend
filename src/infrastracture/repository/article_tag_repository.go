@@ -33,7 +33,7 @@ func (repo ArticleTagRepository) Create(articleTag domain.ArticleTag) (domain.Ar
 	return articleTag, nil
 }
 
-// tagsテーブルからnameフィールドが一致するフィールドを取得するメソッド
+// tagsテーブルからnameフィールドが一致するレコードを取得するメソッド
 func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, error) {
 	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
 	var query = `
@@ -67,31 +67,18 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 	return *articleTag, nil
 }
 
-// func (repo ArticleTagRepository) UpdateNum(id string) (domain.ArticleTag, error) {
-// 	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
-// 	var updateQuery = `
-// 		UPDATE tags SET used_num = ? WHERE id = ?;
-// 	`
+// tagsテーブルのidフィールドが一致するレコードのused_numを1増やすメソッド
+func (repo ArticleTagRepository) UpdateNum(id string) error {
+	// tagsテーブルのidフィールドが一致するレコードのused_numを1増やすクエリ
+	var query = `
+		UPDATE tags SET used_num = used_num + 1 WHERE id = ?;
+	`
 
-// 	// nameが一致したレコードを取得
-// 	row := repo.db.QueryRow(query, name)
-// 	if err := row.Err(); err != nil {
-// 		return domain.ArticleTag{}, err
-// 	}
+	// クエリを実行
+	_, err := repo.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
 
-// 	var dbTag dbTag
-
-// 	// 取得したレコードから、DB用tagモデルの各フィールドに値をスキャン
-// 	err := row.Scan(&dbTag.id, &dbTag.user_id, &dbTag.tag_name, &dbTag.used_num)
-// 	if err != nil {
-// 		return domain.ArticleTag{}, err
-// 	}
-
-// 	// クエリを実行し、userドメインのフィールドを追加
-// 	_, err := repo.db.Exec(updateQuery, id, id)
-// 	if err != nil {
-// 		return domain.ArticleTag{}, err
-// 	}
-
-// 	return domain.ArticleTag{}, nil
-// }
+	return nil
+}
