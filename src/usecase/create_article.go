@@ -56,7 +56,7 @@ func (uc CreateArticleUseCase) Execute(input CreateArticleInputDto) (*CreateArti
 		_, err = uc.tagRepo.FindByName(articleTag.TagName())
 		if err == nil {
 			// ArticleTagの情報更新
-			savedTag, err = uc.tagRepo.UpdateNum(tagName)
+			err = uc.tagRepo.UpdateNum(articleTag.ID())
 			if err != nil {
 				return nil, err
 			}
