@@ -17,6 +17,7 @@ func NewArticleTagRepository(db *sql.DB) ArticleTagRepository {
 	}
 }
 
+// tagsテーブルにレコードを追加するメソッド
 func (repo ArticleTagRepository) Create(articleTag domain.ArticleTag) (domain.ArticleTag, error) {
 	// tagsテーブルにデータを追加するクエリ
 	var query = `
@@ -32,6 +33,7 @@ func (repo ArticleTagRepository) Create(articleTag domain.ArticleTag) (domain.Ar
 	return articleTag, nil
 }
 
+// tagsテーブルからnameフィールドが一致するフィールドを取得するメソッド
 func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, error) {
 	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
 	var query = `
@@ -65,15 +67,10 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 	return *articleTag, nil
 }
 
-// TODO: 後で実装
 // func (repo ArticleTagRepository) UpdateNum(id string) (domain.ArticleTag, error) {
 // 	// tagsテーブルからnameフィールドが一致するレコードを取得するクエリ
 // 	var updateQuery = `
 // 		UPDATE tags SET used_num = ? WHERE id = ?;
-// 	`
-// 	// tagsテーブルからidフィールドが一致するレコードを取得するクエリ
-// 	var selectQuery = `
-// 		SELECT id, user_id, tag_name, used_num FROM tags WHERE id = ?;
 // 	`
 
 // 	// nameが一致したレコードを取得
