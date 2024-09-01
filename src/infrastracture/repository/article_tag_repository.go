@@ -68,7 +68,7 @@ func (repo ArticleTagRepository) FindByName(name string) (domain.ArticleTag, err
 }
 
 // tagsテーブルのidフィールドが一致するレコードのused_numを1増やすメソッド
-func (repo ArticleTagRepository) UpdateNum(id string) error {
+func (repo ArticleTagRepository) UpdateNum(id domain.ArticleTagID) error {
 	// tagsテーブルのidフィールドが一致するレコードのused_numを1増やすクエリ
 	var query = `
 		UPDATE tags SET used_num = used_num + 1 WHERE id = ?;

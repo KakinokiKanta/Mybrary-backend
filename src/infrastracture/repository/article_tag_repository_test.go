@@ -101,14 +101,14 @@ func TestUpdateNumArticleTagRepository(t *testing.T) {
 	tests := []struct {
 		testName string
 		db *sql.DB
-		args string
+		args domain.ArticleTagID
 		expected error
 		expectedErr bool
 	}{
 		{
 			testName: "Successfully update article tag num",
 			db: testDB,
-			args: string(succeedDomain.ID()),
+			args: succeedDomain.ID(),
 			expected: nil,
 			expectedErr: false,
 		},
